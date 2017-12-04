@@ -29,6 +29,8 @@ on load:
 command /skrenamepro [<text>]:
     executable by: players
     aliases: /skrp
+    permission: skrp.main
+    permission message: %{noperm}%
     trigger:
         if arg 1 is not set:
             send "&8&m=============%{prefix}%&8&m============="
