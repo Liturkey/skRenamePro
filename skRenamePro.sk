@@ -1,0 +1,92 @@
+# Hey, thanks for downloading skRenamePro
+# GitHub:
+
+# Configuration
+# Don't touch
+on join:
+    if player is op:
+         if text from "http://pastebin.com/raw.php?i=TbPQQAQb" is not "%{version}%":
+            send "%{prefix}% &fPlugin is outdated."
+            send "%{prefix}% &fDownload the newest version on GitHub."
+variables:
+    {version} = "1.0"
+on load:
+    send "[skRenamePro] Enabled." to console
+    send "[skRenamePro] Official author: iGniSsak" to console
+    send "[skRenamePro] Current version: %{version}%" to console
+    if directory "plugins/skRenamePro" doesn't exist:
+        create dir "plugins/skRenamePro"
+    if file "plugins/skRenamePro/config.yml" doesn't exist:
+        set yaml value "prefix" from file "plugins/skRenamePro/config.yml" to colored "&8[&3skRenamePro]"
+        set yaml value "noperm" from file "plugins/skRenamePro/config.yml" to colored "&cNo permissions."
+        set yaml value "cmdmsg.nameset" from file "plugins/skRenamePro/config.yml" to colored "&fSuccessfully renamed!"
+        set yaml value "cmdmsg.loreset" from file "plugins/skRenamePro/config.yml" to colored "&fLore was succesfully set!"
+    set {prefix} to yaml value "prefix" from file "plugins/skRenamePro/config.yml"
+    set {noperm} to yaml value "noperm" from file "plugins/skRenamePro/config.yml"
+    set {cmdmsg.nameset} to yaml value "cmdmsg.nameset" from file "plugins/skRenamePro/config.yml"
+    set {cmdmsg.loreset} to yaml value "cmdmsg.loreset" from file "plugins/skRenamePro/config.yml"
+
+command /skrenamepro [<text>]:
+    executable by: players
+    aliases: /skrp
+    trigger:
+        if arg 1 is not set:
+            send "&8&m=============%{prefix}%&8&m============="
+            send "&b/skrenamepro (/skrp)&8 : &7Help command"
+            send "&b/skrenamepro reload (/skrp reload)&8 : &7Reload skript and configuration"
+            send "&b/rename <text> &8: &7Rename item with selected text"
+            send "&b/setlore <text> &8: &7Set lore of item with selected text"
+            stop
+        if arg 1 is "reload":
+            send "%{prefix}% &fReloading.."
+            make console execute command "sk reload skRenamePro"
+            send "[skRenamePro] Enabled." to console
+            send "[skRenamePro] Official author: iGniSsak" to console
+            send "[skRenamePro] Current version: %{version}%" to console
+            if directory "plugins/skRenamePro" doesn't exist:
+                create dir "plugins/skRenamePro"
+            if file "plugins/skRenamePro/config.yml" doesn't exist:
+                set yaml value "prefix" from file "plugins/skRenamePro/config.yml" to colored "&8[&3skRenamePro&8]"
+                set yaml value "noperm" from file "plugins/skRenamePro/config.yml" to colored "&cNo permissions."
+                set yaml value "cmdmsg.nameset" from file "plugins/skRenamePro/config.yml" to colored "&fSuccessfully renamed!"
+                set yaml value "cmdmsg.loreset" from file "plugins/skRenamePro/config.yml" to colored "&fLore was succesfully set!"
+            set {prefix} to yaml value "prefix" from file "plugins/skRenamePro/config.yml"
+            set {noperm} to yaml value "noperm" from file "plugins/skRenamePro/config.yml"
+            set {cmdmsg.nameset} to yaml value "cmdmsg.nameset" from file "plugins/skRenamePro/config.yml"
+            set {cmdmsg.loreset} to yaml value "cmdmsg.loreset" from file "plugins/skRenamePro/config.yml"
+            send "%{prefix}% &fReloaded."
+            stop
+
+command /rename [<text>]:
+    executable by: players
+    permission: skrp.rename
+    permission message: %{noperm}%
+    trigger:
+        if arg 1 is set:
+            if player's tool is not air:
+                set name of player's tool to "%colored arg-1%"
+                send "%{prefix}% &fName of item was set to %colored arg-1%&f."
+                stop
+            if player's tool is air:
+                send "%{prefix}% &fYou are not holding a block or tool!"
+                stop
+        else:
+            send "%{prefix}% &fInvalid syntax > &b/rename <text>"
+            stop
+
+command /setlore [<text>]:
+    executable by: players
+    permission: skrp.setlore
+    permission message: %{noperm}%
+    trigger:
+        if arg 1 is set:
+            if player's tool is not air:
+                set lore of player's tool to "%colored arg-1%"
+                send "%{prefix}% &fLore of item was set to %colored arg-1%&f."
+                stop
+            if player's tool is air:
+                send "%{prefix}% &fYou are not holding a block or tool!"
+                stop
+            else:
+                send "%{prefix}% &fInvalid syntax > &b/setlore <text>"
+                stop
