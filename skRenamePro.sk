@@ -1,11 +1,11 @@
 # Hey, thanks for downloading skRenamePro
-# GitHub:
+# GitHub: https://github.com/ignissak/skRenamePro
 
 # Configuration
 # Don't touch
 on join:
     if player is op:
-         if text from "http://pastebin.com/raw.php?i=TbPQQAQb" is not "%{version}%":
+         if text from "https://raw.githubusercontent.com/ignissak/skRenamePro/master/version.txt" is not "%{version}%":
             send "%{prefix}% &fPlugin is outdated."
             send "%{prefix}% &fDownload the newest version on GitHub."
 variables:
