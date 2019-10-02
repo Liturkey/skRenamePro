@@ -73,7 +73,7 @@ command /rename [<text>]:
                 send "%{prefix}% &fYou are not holding a block or tool!"
                 stop
         else:
-            send "%{prefix}% &fInvalid syntax > &b/rename <text>"
+            send "%{prefix}% &fInvalid syntax &f&l> &b/rename <text>"
             stop
 
 command /setlore [<text>]:
